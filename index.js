@@ -1,57 +1,74 @@
-  // 1. Theme Logic
-        const html = document.documentElement;
+        // Theme Toggle
         const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
         const lightIcon = document.getElementById('theme-toggle-light-icon');
         const darkIcon = document.getElementById('theme-toggle-dark-icon');
 
-        function updateIcons() {
+        function updateThemeIcons() {
             if (html.classList.contains('dark')) {
-                lightIcon.classList.add('hidden'); darkIcon.classList.remove('hidden');
+                lightIcon.classList.add('hidden');
+                darkIcon.classList.remove('hidden');
             } else {
-                lightIcon.classList.remove('hidden'); darkIcon.classList.add('hidden');
+                lightIcon.classList.remove('hidden');
+                darkIcon.classList.add('hidden');
             }
         }
-        updateIcons();
-        themeToggle.addEventListener('click', () => { html.classList.toggle('dark'); updateIcons(); });
 
-        // 2. Mobile Menu Logic
-        const menuBtn = document.getElementById('mobile-menu-toggle');
-        const menu = document.getElementById('mobile-menu');
-        const backdrop = document.getElementById('mobile-menu-backdrop');
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            updateThemeIcons();
+            localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+        });
 
-        function toggleMenu() {
-            menu.classList.toggle('active');
-            backdrop.classList.toggle('hidden');
-            menuBtn.classList.toggle('active');
+        // Initialize theme from localStorage
+        if (localStorage.getItem('theme') === 'light') {
+            html.classList.remove('dark');
         }
-        menuBtn.addEventListener('click', toggleMenu);
-        backdrop.addEventListener('click', toggleMenu);
+        updateThemeIcons();
 
-        // 3. Optimized Text Animation (Preserves Internal Spans)
-        function runReveal() {
+        // Mobile Menu
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuBackdrop = document.getElementById('mobile-menu-backdrop');
+        const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenuToggle.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            mobileMenuBackdrop.classList.toggle('hidden');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        });
+
+        mobileMenuBackdrop.addEventListener('click', () => {
+            mobileMenuToggle.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            mobileMenuBackdrop.classList.add('hidden');
+            document.body.style.overflow = '';
+        });
+
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenuToggle.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                mobileMenuBackdrop.classList.add('hidden');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // Text Reveal Animation
+        function revealText() {
             const elements = document.querySelectorAll('.reveal-text');
-            let globalDelay = 0.4;
-
-            elements.forEach(el => {
-                const text = el.innerText;
-                el.innerText = '';
-                const speed = el.tagName === 'P' ? 0.015 : 0.04;
-
-                text.split('').forEach(char => {
+            elements.forEach((el, i) => {
+                const text = el.textContent;
+                el.innerHTML = '';
+                text.split('').forEach((char, j) => {
                     const span = document.createElement('span');
-                    span.innerText = char === ' ' ? '\u00A0' : char;
-                    span.classList.add('letter');
-                    span.style.animationDelay = `${globalDelay}s`;
-                    globalDelay += speed;
+                    span.textContent = char === ' ' ? '\u00A0' : char;
+                    span.className = 'letter';
+                    span.style.animationDelay = `${(i * 0.1) + (j * 0.03)}s`;
                     el.appendChild(span);
                 });
-                globalDelay += 0.2; // Pause between elements
             });
         }
-        window.addEventListener('load', runReveal);
-// skills buttons
-// Inside your runReveal function
-setTimeout(() => {
-    const cta = document.getElementById('cta-button');
-    if(cta) cta.classList.remove('opacity-0');
-}, globalDelay * 1000);
+
+        document.addEventListener('DOMContentLoaded', revealText);
