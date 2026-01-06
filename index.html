@@ -7,7 +7,37 @@
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <link href="wheel.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<style>
+    /* Smooth Floating Physics */
+    @keyframes float-gentle {
+        0%, 100% { transform: translateY(0) rotate(0deg); }
+        50% { transform: translateY(-20px) rotate(3deg); }
+    }
+
+    .float-animation {
+        animation: float-gentle 6s ease-in-out infinite;
+    }
+
+    .float-animation-delayed {
+        animation: float-gentle 8s ease-in-out infinite;
+        animation-delay: 2s;
+    }
+
+    /* Word Cloud Interactivity */
+    .font-soria span {
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        cursor: crosshair;
+    }
+
+    .font-soria span:hover {
+        color: #EE6E4D !important;
+        transform: scale(1.2) !important;
+        filter: drop-shadow(0 0 15px rgba(238, 110, 77, 0.6));
+        z-index: 50;
+    }
+</style>
     <style>
         @font-face {
             font-family: 'Soria';
@@ -139,8 +169,9 @@
         </div>
     </main>
     <div class="h-32"></div>
-   <div class="container mx-auto px-6">
+   <div class="container mx-w-8xl mx-auto px-6">
     <section id="about" class="mb-20">
+        
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div>
                 <h2 class="font-soria text-4xl text-black dark:text-primary mb-4">About Me</h2>
@@ -161,7 +192,7 @@
                        rel="noopener noreferrer"
                        class="group relative flex items-center justify-center w-24 h-24 bg-gray-900 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
                         
-                        <span class="absolute inset-0 rounded-full bg-gray-900 animate-ping opacity-20 group-hover:hidden"></span>
+                        <span class="absolute inset-0 rounded-full bg-gray-900 dark:bg-white animate-ping opacity-20 group-hover:hidden"></span>
                         
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="z-10">
                             <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
@@ -187,15 +218,89 @@
                     </a>
                     <span class="text-sm font-medium text-black dark:text-white">LinkedIn</span>
                 </div>
+                <div class="flex flex-col items-center gap-2">
+    <a href="contact" 
+       class="group relative flex items-center justify-center w-24 h-24 bg-primary rounded-full transition-all duration-300 hover:scale-110 hover:shadow-[0_0_20px_rgba(238,110,77,0.5)]">
+        
+        <span class="absolute inset-0 rounded-full bg-primary animate-ping opacity-40 group-hover:hidden"></span>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="z-10">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+        </svg>
+    </a>
+    <span class="text-sm font-medium text-black dark:text-white">Email</span>
+</div>
             </div>
         </div>
     </section>
-        <section id="projects" class="mb-20">
-            <!-- Content for Projects -->
-        </section>
+  <section id="skills" class="mb-32 px-6 md:px-20 py-20 bg-white dark:bg-dark transition-colors duration-500 overflow-hidden">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        
+        <div class="relative h-[500px] w-full flex items-center justify-center order-2 lg:order-1">
+            <div class="absolute w-72 h-72 bg-primary/20 dark:bg-primary/10 blur-[120px] rounded-full"></div>
 
-        <!-- About Section -->
-       
+            <div class="relative w-full h-full font-soria select-none">
+                <span class="absolute top-[10%] left-[15%] text-4xl md:text-5xl text-black dark:text-primary/90 float-animation">Python</span>
+                <span class="absolute top-[40%] right-[10%] text-5xl md:text-6xl text-primary float-animation-delayed font-bold">Django</span>
+                <span class="absolute bottom-[20%] left-[20%] text-4xl text-black dark:text-white/80 float-animation">Flask</span>
+                
+                <span class="absolute top-[25%] right-[30%] text-2xl md:text-3xl text-gray-600 dark:text-primary/60 float-animation-delayed">JavaScript</span>
+                <span class="absolute bottom-[35%] right-[15%] text-3xl text-black dark:text-white/70 float-animation">DSA</span>
+                <span class="absolute top-[55%] left-[5%] text-2xl text-primary/80 float-animation-delayed">Tailwind CSS</span>
+                
+                <span class="absolute top-[5%] right-[25%] text-xl text-gray-400 dark:text-white/30 float-animation">HTML5</span>
+                <span class="absolute bottom-[8%] right-[35%] text-xl text-gray-400 dark:text-white/30 float-animation-delayed">Hadoop</span>
+                <span class="absolute middle-[50%] left-[40%] text-lg text-primary/40 float-animation">Spark</span>
+                <span class="absolute top-[75%] right-[40%] text-xl text-gray-500 dark:text-white/40 float-animation-delayed">Git</span>
+                <span class="absolute top-[35%] left-[45%] text-lg text-gray-400 dark:text-white/20 float-animation">SQL</span>
+            </div>
+        </div>
+
+        <div class="order-1 lg:order-2">
+            <h2 class="font-soria text-5xl text-black dark:text-primary mb-8 reveal-text">
+                Skills & Experience
+            </h2>
+            
+            <div class="space-y-6 text-lg">
+                <p class="text-gray-700 dark:text-gray-400 leading-relaxed font-medium">
+                    My expertise lies in crafting <span class="text-primary border-b-2 border-primary/20">robust backend architectures</span> and building seamless, high-performance user interfaces.
+                </p>
+
+                <ul class="space-y-5">
+                    <li class="flex items-start gap-4 group">
+                        <span class="text-primary text-2xl group-hover:scale-125 transition-transform">▹</span>
+                        <span class="text-gray-800 dark:text-white/90">
+                            Deep proficiency in <strong class="text-black dark:text-primary">Python & JavaScript</strong> (Django, Flask, React).
+                        </span>
+                    </li>
+                    <li class="flex items-start gap-4 group">
+                        <span class="text-primary text-2xl group-hover:scale-125 transition-transform">▹</span>
+                        <span class="text-gray-800 dark:text-white/90">
+                            Scalable database design using <strong class="text-black dark:text-primary">MySQL</strong>.
+                        </span>
+                    </li>
+                    <li class="flex items-start gap-4 group">
+                        <span class="text-primary text-2xl group-hover:scale-125 transition-transform">▹</span>
+                        <span class="text-gray-800 dark:text-white/90">
+                            Data Science pipelines with <strong class="text-black dark:text-primary">Pandas, NumPy, and Scikit-learn</strong>.
+                        </span>
+                    </li>
+                </ul>
+
+                <div class="pt-8">
+                    <a href="#contact" class="nav-3d inline-block px-10 py-4 bg-white dark:bg-dark border-2 border-black dark:border-primary text-black dark:text-white font-soria text-xl tracking-tight">
+                        Let's Talk Projects
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
 
         <!-- Contact Section -->
         <section id="contact" class="mb-20">

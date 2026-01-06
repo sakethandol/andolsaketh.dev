@@ -49,3 +49,9 @@
             });
         }
         window.addEventListener('load', runReveal);
+// skills buttons
+// Inside your runReveal function
+setTimeout(() => {
+    const cta = document.getElementById('cta-button');
+    if(cta) cta.classList.remove('opacity-0');
+}, globalDelay * 1000);
