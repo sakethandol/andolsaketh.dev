@@ -1,16 +1,30 @@
-
 document.getElementById('contactForm').addEventListener('submit', async function(e) {
   e.preventDefault();
 
   const btn = document.getElementById('submitBtn');
-  btn.textContent = 'Sending...';
+  const btnText = btn.querySelector('span');
+
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const message = document.getElementById('message').value.trim();
+
+  // Validation — stop if any field is empty
+  if (!name || !email || !message) {
+    showToast('Please fill in all fields before sending.');
+    return;
+  }
+
+  // Validation — basic email format check
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailPattern.test(email)) {
+    showToast('Please enter a valid email address.');
+    return;
+  }
+
+  btnText.textContent = 'Sending...';
   btn.disabled = true;
 
-  const data = {
-    name: document.getElementById('name').value,
-    email: document.getElementById('email').value,
-    message: document.getElementById('message').value
-  };
+  const data = { name, email, message };
 
   try {
     await fetch("https://script.google.com/macros/s/AKfycbwDY5oK6yuB_QenTNjRCVeIcnA3vnokZIAYyXx_Axohdf4dYR-d5k8KBsH6HvEr2JQOkg/exec", {
@@ -20,14 +34,14 @@ document.getElementById('contactForm').addEventListener('submit', async function
       body: JSON.stringify(data)
     });
 
-    showToast('Message sent successfully! 🎉');
+    showToast('Message sent successfully!');
     document.getElementById('contactForm').reset();
 
   } catch (error) {
     showToast('Something went wrong. Please try again.');
   }
 
-  btn.textContent = 'Send Message →';
+  btnText.textContent = 'Send Message →';
   btn.disabled = false;
 });
 
